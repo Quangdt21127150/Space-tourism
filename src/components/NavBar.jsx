@@ -1,107 +1,98 @@
-import { useState, useEffect } from "react";
-import { Link, Outlet, useLocation } from "react-router-dom";
-import logo from "../assets/logo.svg";
-import menu from "../assets/menu.png";
-import close from "../assets/close.png";
-import "./header.css";
+import { Link, useLocation } from "react-router-dom";
+import { useState } from "react";
+import LogoIcon from "../assets/shared/LogoIcon";
+import HamburgerIcon from "../assets/shared/HamburgerIcon";
+import CloseIcon from "../assets/shared/CloseIcon";
+import MobileNav from "./navigation/MobileNav";
+import PropTypes from "prop-types";
 
-const NavBar = () => {
-  const [showNav, setShowNav] = useState(false);
-  const [isMobile, setIsMobile] = useState(window.innerWidth <= 485);
+function Navbar({ windowWidth }) {
+  const [mobileNavOpen, setMobileNavOpen] = useState(false);
   const location = useLocation();
 
-  const menuToggle = () => {
-    setShowNav((prev) => !prev);
-  };
+  function handleMobileNavToggle() {
+    setMobileNavOpen(!mobileNavOpen);
+  }
 
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth <= 485);
-    };
+  function handleOverlayClick() {
+    setMobileNavOpen(false);
+  }
 
-    window.addEventListener("resize", handleResize);
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
-
-  const getNavLinkClass = (path) => {
-    const className = location.pathname.startsWith(path) ? "active" : "";
-    return className;
+  const paths = {
+    home: {
+      path: "/",
+      name: "Home",
+    },
+    destination: {
+      path: "/destination",
+      name: "Destination",
+    },
+    crew: {
+      path: "/crew",
+      name: "Crew",
+    },
+    technology: {
+      path: "/technology",
+      name: "Technology",
+    },
   };
 
   return (
-    <div className="w-full h-full">
-      <header>
-        <div className="logo">
-          <img src={logo} alt="Logo" />
-        </div>
-
-        {isMobile ? (
-          <>
-            <img
-              className="menuBtn"
-              src={showNav ? close : menu}
-              alt="Menu Toggle"
-              onClick={menuToggle}
-            />
-            {showNav && (
-              <nav>
-                <ul>
-                  <li>
-                    <Link to="/home" onClick={menuToggle}>
-                      <span>00</span> Home
-                    </Link>
-                  </li>
-                  <li>
-                    <Link to="/destination" onClick={menuToggle}>
-                      <span>01</span> Destination
-                    </Link>
-                  </li>
-                  <li>
-                    <Link to="/crew" onClick={menuToggle}>
-                      <span>02</span> Crew
-                    </Link>
-                  </li>
-                  <li>
-                    <Link to="/technology" onClick={menuToggle}>
-                      <span>03</span> Technology
-                    </Link>
-                  </li>
-                </ul>
-              </nav>
-            )}
-          </>
-        ) : (
-          <nav>
-            <ul>
-              <li className={getNavLinkClass("/home")}>
-                <Link to="/home">
-                  <span>00</span> Home
-                </Link>
-              </li>
-              <li className={getNavLinkClass("/destination")}>
-                <Link to="/destination">
-                  <span>01</span> Destination
-                </Link>
-              </li>
-              <li className={getNavLinkClass("/crew")}>
-                <Link to="/crew">
-                  <span>02</span> Crew
-                </Link>
-              </li>
-              <li className={getNavLinkClass("/technology")}>
-                <Link to="/technology">
-                  <span>03</span> Technology
-                </Link>
-              </li>
-            </ul>
-          </nav>
+    <>
+      <header className="flex justify-between min-w-screen items-center px-6 pt-6 z-40 md:pt-0 md:px-0 lg:pt-10">
+        <Link to="/" className="md:ml-10 lg:ml-14">
+          <LogoIcon
+            height={windowWidth >= 768 ? 48 : 40}
+            width={windowWidth >= 768 ? 48 : 40}
+          />
+        </Link>
+        <button
+          className="text-primary focus:outline-none md:hidden z-50"
+          onClick={handleMobileNavToggle}
+        >
+          {mobileNavOpen ? (
+            <CloseIcon className="mr-0.5 md:hidden" />
+          ) : (
+            <HamburgerIcon className="md:hidden" />
+          )}
+        </button>
+        {mobileNavOpen && (
+          <MobileNav
+            handleOverlayClick={handleOverlayClick}
+            handleMobileNavToggle={handleMobileNavToggle}
+          />
         )}
+        <nav className="hidden md:flex md:justify-center md:bg-opaque md:w-112 lg:w-207 backdrop-blur-2xl">
+          <ul className="uppercase text-primary flex items-center gap-9 lg:gap-13 font-secondary md:min-h-24">
+            {windowWidth >= 1440 && (
+              <div className="h-tiny w-118 bg-white opacity-25 absolute right-nav-accent"></div>
+            )}
+            {Object.values(paths).map((path, index) => (
+              <li key={path.name}>
+                <Link
+                  to={path.path}
+                  className={`py-9 tracking-nav text-sub lg:text-base font-primary-condensed ${
+                    path.path === location.pathname
+                      ? "border-b-3"
+                      : "hover:border-b-3 hover:border-hover"
+                  }`}
+                >
+                  {windowWidth >= 1440 && (
+                    <span className="p-3 font-bold">{"0" + index}</span>
+                  )}
+                  {path.name}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </nav>
       </header>
-      <Outlet />
-    </div>
+    </>
   );
+}
+
+Navbar.propTypes = {
+  windowWidth: PropTypes.number.isRequired,
 };
 
-export default NavBar;
+export default Navbar;

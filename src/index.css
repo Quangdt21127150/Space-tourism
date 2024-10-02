@@ -1,8 +1,60 @@
-* {
-  padding: 0;
-  margin: 0;
+/* Tailwind directives */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Global styles */
+
+:root {
+  --primary: #FFFFFF;
+  --secondary: #D0D6F9;
+  --tertiary: #0B0D17;
+  --border: #383B4B;
+  --inactive: #979797;
+  --opaque: rgba(255, 255, 255, 0.05);
+  --hover: rgba(255, 255, 255, 0.25);
+}
+
+*, *::before, *::after {
   box-sizing: border-box;
 }
-* a {
-  text-decoration: none;
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Bellefair", serif;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+h1 {
+  font-size: 5rem;
+}
+
+h2 {
+  font-size: 3.5rem;
+}
+
+h3 {
+  font-size: 1.5rem;
+}
+
+h4 {
+  font-size: 1rem;
+}
+
+h5 {
+  font-size: 1rem;
+  letter-spacing: 0.169rem;
+}
+
+p {
+  font-family: "Barlow", sans-serif;
+  line-height: 1.563rem;
+  font-size: 0.938rem;
 }
