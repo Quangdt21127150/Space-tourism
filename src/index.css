@@ -6,18 +6,16 @@
 /* Global styles */
 
 :root {
-  --primary: #ffffff;
-  --secondary: #d0d6f9;
-  --tertiary: #0b0d17;
-  --border: #383b4b;
+  --primary: #FFFFFF;
+  --secondary: #D0D6F9;
+  --tertiary: #0B0D17;
+  --border: #383B4B;
   --inactive: #979797;
   --opaque: rgba(255, 255, 255, 0.05);
   --hover: rgba(255, 255, 255, 0.25);
 }
 
-*,
-*::before,
-*::after {
+*, *::before, *::after {
   box-sizing: border-box;
 }
 
