@@ -47,8 +47,8 @@ Users should be able to:
 
 ### Links
 
-- Solution URL: [Frontend Mentor Solution](https://www.frontendmentor.io/solutions-using-react-and-tailwind-xk_KhaKCRN)
-- Live Site URL: [Space Tourism Website](https://patrick-dolan.github.io/)
+- Solution URL: [Frontend Mentor Solution](https://www.frontendmentor.io/solutions/space-tourism-website-using-react-and-tailwind-xk_KhaKCRN)
+- Live Site URL: [Space Tourism Website](https://patrick-dolan.github.io/space-tourism-website/)
 
 ## My process
 
